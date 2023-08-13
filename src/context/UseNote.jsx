@@ -11,6 +11,7 @@ export function NoteProvier({ children }) {
   const [notes, setNotes] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [searchNote, setSearchNote] = useState("");
+  const [grid, setGrid] = useState(false);
 
   function deleteNote(id) {
     setNotes((prevNotes) => {
@@ -24,9 +25,9 @@ export function NoteProvier({ children }) {
     setNotes((prevNotes) => {
       return prevNotes.map((note) => {
         if (note.id === id) {
-          return { ...note, modal: !note.modal };
+          return { ...note, modal: !note.modal, openColor: false };
         } else {
-          return note;
+          return { ...note, openColor: false };
         }
       });
     });
@@ -56,6 +57,40 @@ export function NoteProvier({ children }) {
     }
   }
 
+  function changeGrid() {
+    setGrid((prevGrid) => !prevGrid);
+  }
+
+  function changeColor(id, nightModeColor, lightModeColor) {
+    setNotes((prevNotes) => {
+      return prevNotes.map((note) => {
+        if (note.id === id) {
+          return {
+            ...note,
+            backgroundColor: {
+              nightMode: nightModeColor,
+              lightMode: lightModeColor,
+            },
+          };
+        } else {
+          return note;
+        }
+      });
+    });
+  }
+
+  function openColor(id) {
+    setNotes((prevNotes) => {
+      return prevNotes.map((note) => {
+        if (note.id === id) {
+          return { ...note, openColor: !note.openColor };
+        } else {
+          return { ...note, openColor: false };
+        }
+      });
+    });
+  }
+
   return (
     <NoteContext.Provider
       value={{
@@ -69,6 +104,10 @@ export function NoteProvier({ children }) {
         searchNote,
         setSearchNote,
         truncateSentence,
+        grid,
+        changeGrid,
+        changeColor,
+        openColor,
       }}
     >
       {children}

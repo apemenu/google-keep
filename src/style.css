@@ -20,9 +20,9 @@ body.dark {
   padding: 10px 5%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   height: 60px;
   border-bottom: 1px solid #e0e0e0;
+  gap: 20px;
 }
 
 .header input {
@@ -32,6 +32,10 @@ body.dark {
   padding: 11px 10px;
   border-radius: 8px;
   color: inherit;
+}
+
+.grid-icon {
+  margin-left: auto;
 }
 
 .header input:focus {
@@ -80,7 +84,7 @@ body.dark {
   padding: 15px 15px;
   border-radius: 12px;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-  width: clamp(40%, 500px, 80%);
+  width: clamp(40%, 500px, 90%);
   margin-bottom: 50px;
   position: relative;
 }
@@ -107,7 +111,8 @@ body.dark {
 .footer {
   margin-top: auto;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+  gap: 10px;
 }
 
 .add {
@@ -125,9 +130,18 @@ body.dark {
   width: 100%;
   padding: 50px 5%;
   padding-top: 0;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.grid {
+  width: 100%;
+  padding: 50px 5%;
+  padding-top: 0;
+  display: grid;
+  grid-template-columns: repeat(1fr);
+  justify-content: center;
   gap: 16px;
 }
 
@@ -135,20 +149,25 @@ small {
   align-self: self-start;
   padding: 10px 5%;
   text-transform: uppercase;
-  font-family: "Google Sans", sans-serif;
-  font-size: 10px;
-  letter-spacing: 2px;
+  font-family: "Roboto", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 11px;
 }
 
 .note {
   border: 1px solid #e0e0e0;
-  width: 240px;
   padding: 12px 16px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: hidden; */
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.note.grid {
+  width: clamp(400px, 60vw, 600px);
 }
 
 .note-title {
@@ -170,19 +189,20 @@ small {
   justify-content: space-between;
 }
 
-.pin {
-  font-size: 20px;
+.icon {
   cursor: pointer;
   opacity: 0;
+  padding: 5px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
 
-.delete {
-  cursor: pointer;
-  opacity: 0;
+.icon:hover {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.note:hover .pin,
-.note:hover .delete {
+.note:hover .icon {
   opacity: 1;
 }
 
@@ -198,12 +218,15 @@ small {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 10px;
+  z-index: 9999999;
 }
 
 .modal {
   background-color: #fff;
   width: 600px;
   height: fit-content;
+  border: none;
 }
 
 .modal.dark {
@@ -224,4 +247,43 @@ small {
 
 .btn:hover {
   background-color: rgba(95, 99, 104, 0.039);
+}
+
+/* Color Box */
+
+.color-box {
+  position: absolute;
+  bottom: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  gap: 5px;
+  width: fit-content;
+  padding: 5px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 999;
+}
+
+.color {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.color:nth-child(1) {
+  border: 1px solid #e0e0e0;
+}
+
+.check {
+  color: blue;
+  background-color: white;
+  border-radius: 50%;
+  border: none;
+  position: absolute;
+  top: -3px;
+  right: 0;
 }

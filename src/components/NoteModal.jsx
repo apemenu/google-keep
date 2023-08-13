@@ -1,9 +1,10 @@
 import { useRef } from "react";
 import { useNote } from "../context/UseNote";
 import PropTypes from "prop-types";
+import { BsPin, BsPinFill } from "react-icons/bs";
 
 export default function NoteModal({ note }) {
-  const { setNotes, getModal, darkMode } = useNote();
+  const { setNotes, getModal, darkMode, addPinned } = useNote();
   const titleEditRef = useRef();
   const textEditRef = useRef();
 
@@ -24,6 +25,16 @@ export default function NoteModal({ note }) {
     getModal(note.id);
   }
 
+  function closeModal(e) {
+    if (e.target.classList.contains("note-modal")) {
+      setNotes((prevNotes) => {
+        return prevNotes.map((note) => {
+          return { ...note, modal: false };
+        });
+      });
+    }
+  }
+
   //   function getCurrentTime() {
   //     const now = new Date();
   //     const hours = String(now.getHours()).padStart(2, "0");
@@ -34,15 +45,29 @@ export default function NoteModal({ note }) {
 
   return (
     note.modal && (
-      <div className="note-modal">
-        <div className={darkMode ? "note modal dark" : "note modal"}>
-          <div
-            contentEditable
-            suppressContentEditableWarning
-            ref={titleEditRef}
-            className="input-box"
-          >
-            {note.title}
+      <div className="note-modal" onClick={(e) => closeModal(e)}>
+        <div
+          className={darkMode ? "note modal dark" : "note modal"}
+          style={{
+            backgroundColor: darkMode
+              ? note.backgroundColor.nightMode
+              : note.backgroundColor.lightMode,
+          }}
+        >
+          <div className="note-top">
+            <div
+              contentEditable
+              suppressContentEditableWarning
+              ref={titleEditRef}
+              className="input-box"
+            >
+              {note.title}
+            </div>
+            {note.isPinned ? (
+              <BsPinFill className="pin icon" onClick={() => addPinned(note.id)} />
+            ) : (
+              <BsPin className="pin icon" onClick={() => addPinned(note.id)} />
+            )}
           </div>
           <div
             contentEditable
@@ -52,7 +77,6 @@ export default function NoteModal({ note }) {
           >
             {note.text}
           </div>
-          {/* <small>{getCurrentTime()}</small> */}
           <div className="footer">
             <button onClick={() => editNote(note.id)} className="btn">
               Save

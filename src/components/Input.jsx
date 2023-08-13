@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 export default function Input() {
   const [typeTitle, setTypeTitle] = useState("");
   const [typeText, setTypeText] = useState("");
+  const [openInput, setOpenInput] = useState(false);
   const titleRef = useRef();
   const textRef = useRef();
   const { setNotes } = useNote();
@@ -15,12 +16,18 @@ export default function Input() {
       titleRef.current.textContent === "" &&
       textRef.current.textContent === ""
     ) {
+      setOpenInput(false);
       return;
     } else {
       const newNote = {
         id: nanoid(),
         title: titleRef.current.textContent,
         text: textRef.current.textContent,
+        backgroundColor: {
+          nightMode: "",
+          lightMode: "",
+        },
+        openColor: false,
         modal: false,
         isPinned: false,
       };
@@ -33,11 +40,17 @@ export default function Input() {
       setTypeTitle("");
       setTypeText("");
     }
+
+    setOpenInput(false);
+  }
+
+  function expandInput() {
+    setOpenInput(true);
   }
 
   return (
     <div className="input-container">
-      <div className="input-box">
+      <div className="input-box" style={{ display: openInput ? "" : "none" }}>
         <div
           className="placeholder"
           style={{ display: typeTitle === "" ? "block" : "none" }}
@@ -64,10 +77,11 @@ export default function Input() {
           contentEditable
           ref={textRef}
           onInput={(e) => setTypeText(e.target.textContent)}
+          onClick={expandInput}
           suppressContentEditableWarning
         ></div>
       </div>
-      <div className="footer">
+      <div className="footer" style={{ display: openInput ? "" : "none" }}>
         <BiPlus className="add" onClick={addNote} />
       </div>
     </div>

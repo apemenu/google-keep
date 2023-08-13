@@ -12,18 +12,19 @@ export default function App() {
     <>
       <Header />
       <div className="container">
-        <Input />
-        {notes.length === 0 && <p>Add Note</p>}
         {searchNote !== "" && (
           <NoteSearch
-            notes={notes.filter((note) =>
-              note.text.toLowerCase().includes(searchNote) ||
-              note.title.toLowerCase().includes(searchNote)
+            notes={notes.filter(
+              (note) =>
+                note.text.toLowerCase().includes(searchNote) ||
+                note.title.toLowerCase().includes(searchNote)
             )}
           />
         )}
         {searchNote === "" && (
           <>
+            <Input />
+            {notes.length === 0 && <p>Add Note</p>}
             <NotePinned />
             <NoteList />
           </>
