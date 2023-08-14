@@ -30,6 +30,8 @@ export default function Input() {
         openColor: false,
         modal: false,
         isPinned: false,
+        archived: false,
+        trash: false,
       };
       setNotes((prevNote) => {
         return [newNote, ...prevNote];

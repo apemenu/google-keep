@@ -1,10 +1,17 @@
 import { useNote } from "../context/UseNote";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { FiSun, FiMoon, FiMenu } from "react-icons/fi";
 import { BsGrid } from "react-icons/bs";
 import { CiGrid2H } from "react-icons/ci";
 export default function Header() {
-  const { darkMode, setDarkMode, searchNote, setSearchNote, changeGrid, grid } =
-    useNote();
+  const {
+    darkMode,
+    setDarkMode,
+    searchNote,
+    setSearchNote,
+    changeGrid,
+    grid,
+    setOpenNav,
+  } = useNote();
 
   if (darkMode) {
     document.body.classList.add("dark");
@@ -14,32 +21,38 @@ export default function Header() {
 
   return (
     <div className="header">
+      <FiMenu
+        className="header-icon icon"
+        onClick={() => setOpenNav((nav) => !nav)}
+      />
       <input
         type="text"
         placeholder="Search note..."
         value={searchNote}
         onChange={(e) => setSearchNote(e.target.value)}
       />
-      <div className="grid-icon">
-        {grid ? (
-          <BsGrid onClick={() => changeGrid()} />
-        ) : (
-          <CiGrid2H onClick={() => changeGrid()} />
-        )}
-      </div>
-      <div className={darkMode ? "shadow dark" : "shadow"}>
-        {darkMode ? (
-          <FiMoon
-            className="btn-mode"
-            onClick={() => setDarkMode((prevMode) => !prevMode)}
-          />
-        ) : (
-          <FiSun
-            className="btn-mode"
-            onClick={() => setDarkMode((prevMode) => !prevMode)}
-          />
-        )}
-      </div>
+      {grid ? (
+        <BsGrid
+          onClick={() => changeGrid()}
+          className="header-icon marleft icon"
+        />
+      ) : (
+        <CiGrid2H
+          onClick={() => changeGrid()}
+          className="header-icon marleft icon"
+        />
+      )}
+      {darkMode ? (
+        <FiMoon
+          className="header-icon icon"
+          onClick={() => setDarkMode((prevMode) => !prevMode)}
+        />
+      ) : (
+        <FiSun
+          className="header-icon icon"
+          onClick={() => setDarkMode((prevMode) => !prevMode)}
+        />
+      )}
     </div>
   );
 }

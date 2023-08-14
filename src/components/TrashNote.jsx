@@ -1,24 +1,18 @@
-import PropTypes from "prop-types";
-import { AiOutlineMinusSquare } from "react-icons/ai";
-import { BsPin, BsPinFill, BsArrowBarUp } from "react-icons/bs";
-import { MdOutlineColorLens } from "react-icons/md";
-import { PiArchiveBox } from "react-icons/pi";
-import { useNote } from "../context/UseNote";
-import NoteModal from "./NoteModal";
 import { motion } from "framer-motion";
-import ColorChanger from "./ColorChanger";
+import { useNote } from "../context/UseNote";
+import PropTypes from "prop-types";
+import TrashNoteModal from "./TrashNoteModal";
 import Highlighter from "react-highlight-words";
+import { BsArrowBarUp, BsTrash } from "react-icons/bs";
 
-export default function Note({ note }) {
+export default function TrashNote({ note }) {
   const {
     getModal,
-    addPinned,
     truncateSentence,
     grid,
-    openColor,
     darkMode,
     searchNote,
-    archiveNote,
+    deleteNote,
     moveToTrash,
   } = useNote();
 
@@ -37,7 +31,7 @@ export default function Note({ note }) {
   return (
     <>
       <motion.div
-        className={`note ${grid ? `grid` : ``}`}
+        className={`note kontol ${grid ? `grid` : ``}`}
         layout
         onClick={openModal}
         style={{
@@ -58,17 +52,6 @@ export default function Note({ note }) {
               }
             />
           </span>
-          {note.isPinned ? (
-            <BsPinFill
-              className="icon note-icon"
-              onClick={() => addPinned(note.id)}
-            />
-          ) : (
-            <BsPin
-              className="icon note-icon"
-              onClick={() => addPinned(note.id)}
-            />
-          )}
         </div>
         <span className="note-text">
           <Highlighter
@@ -78,34 +61,21 @@ export default function Note({ note }) {
           />
         </span>
         <div className="footer">
-          {note.archived ? (
-            <BsArrowBarUp
-              onClick={() => archiveNote(note.id)}
-              className="icon note-icon"
-            />
-          ) : (
-            <PiArchiveBox
-              onClick={() => archiveNote(note.id)}
-              className="icon note-icon"
-            />
-          )}
-
-          <MdOutlineColorLens
-            onClick={() => openColor(note.id)}
+          <BsTrash
             className="icon note-icon"
+            onClick={() => deleteNote(note.id)}
           />
-          <AiOutlineMinusSquare
-            onClick={() => moveToTrash(note.id)}
+          <BsArrowBarUp
             className="icon note-icon"
+            onClick={() => moveToTrash(note.id)}
           />
         </div>
-        <ColorChanger id={note.id} note={note} />
       </motion.div>
-      <NoteModal note={note} />
+      <TrashNoteModal note={note} />
     </>
   );
 }
 
-Note.propTypes = {
+TrashNote.propTypes = {
   note: PropTypes.object,
 };

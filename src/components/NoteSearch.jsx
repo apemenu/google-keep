@@ -10,7 +10,9 @@ export default function NoteSearch({ notes }) {
         <p className="matching">No matching results</p>
       ) : (
         notes.map((note) => {
-          return <Note note={note} key={note.id} />;
+          if (!note.trash) {
+            return <Note note={note} key={note.id} />;
+          }
         })
       )}
     </div>

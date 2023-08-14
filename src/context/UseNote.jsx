@@ -12,6 +12,7 @@ export function NoteProvier({ children }) {
   const [darkMode, setDarkMode] = useState(false);
   const [searchNote, setSearchNote] = useState("");
   const [grid, setGrid] = useState(false);
+  const [openNav, setOpenNav] = useState(false);
 
   function deleteNote(id) {
     setNotes((prevNotes) => {
@@ -37,7 +38,7 @@ export function NoteProvier({ children }) {
     setNotes((prevNotes) => {
       return prevNotes.map((note) => {
         if (note.id === id) {
-          return { ...note, isPinned: !note.isPinned };
+          return { ...note, isPinned: !note.isPinned, archived: false };
         } else {
           return note;
         }
@@ -91,6 +92,34 @@ export function NoteProvier({ children }) {
     });
   }
 
+  function archiveNote(id) {
+    setNotes((prevNotes) => {
+      return prevNotes.map((note) => {
+        if (note.id === id) {
+          return {
+            ...note,
+            archived: !note.archived,
+            isPinned: false,
+            modal: false,
+          };
+        } else {
+          return note;
+        }
+      });
+    });
+  }
+  function moveToTrash(id) {
+    setNotes((prevNotes) => {
+      return prevNotes.map((note) => {
+        if (note.id === id) {
+          return { ...note, trash: !note.trash, isPinned: false, modal: false };
+        } else {
+          return note;
+        }
+      });
+    });
+  }
+
   return (
     <NoteContext.Provider
       value={{
@@ -108,6 +137,10 @@ export function NoteProvier({ children }) {
         changeGrid,
         changeColor,
         openColor,
+        archiveNote,
+        moveToTrash,
+        openNav,
+        setOpenNav,
       }}
     >
       {children}

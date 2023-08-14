@@ -1,19 +1,12 @@
 import { useRef } from "react";
 import { useNote } from "../context/UseNote";
 import PropTypes from "prop-types";
-import { BsPin, BsPinFill, BsArrowBarUp } from "react-icons/bs";
-import { AiOutlineMinusSquare } from "react-icons/ai";
-import { PiArchiveBox } from "react-icons/pi";
+import { BsPin, BsPinFill } from "react-icons/bs";
+import { BsArrowBarUp, BsTrash } from "react-icons/bs";
 
-export default function NoteModal({ note }) {
-  const {
-    setNotes,
-    getModal,
-    darkMode,
-    addPinned,
-    archiveNote,
-    moveToTrash,
-  } = useNote();
+export default function TrashNoteModal({ note }) {
+  const { setNotes, getModal, darkMode, addPinned, deleteNote, moveToTrash } =
+    useNote();
   const titleEditRef = useRef();
   const textEditRef = useRef();
 
@@ -85,20 +78,13 @@ export default function NoteModal({ note }) {
             {note.text}
           </div>
           <div className="footer">
-            {note.archived ? (
-              <BsArrowBarUp
-                onClick={() => archiveNote(note.id)}
-                className="icon note-icon"
-              />
-            ) : (
-              <PiArchiveBox
-                onClick={() => archiveNote(note.id)}
-                className="icon note-icon"
-              />
-            )}
-            <AiOutlineMinusSquare
-              onClick={() => moveToTrash(note.id)}
+            <BsTrash
               className="icon note-icon"
+              onClick={() => deleteNote(note.id)}
+            />
+            <BsArrowBarUp
+              className="icon note-icon"
+              onClick={() => moveToTrash(note.id)}
             />
             <button onClick={() => editNote(note.id)} className="btn">
               Close
@@ -110,6 +96,6 @@ export default function NoteModal({ note }) {
   );
 }
 
-NoteModal.propTypes = {
+TrashNoteModal.propTypes = {
   note: PropTypes.object,
 };
