@@ -1,11 +1,10 @@
 import { useRef } from "react";
 import { useNote } from "../context/UseNote";
 import PropTypes from "prop-types";
-import { BsPin, BsPinFill } from "react-icons/bs";
 import { BsArrowBarUp, BsTrash } from "react-icons/bs";
 
 export default function TrashNoteModal({ note }) {
-  const { setNotes, getModal, darkMode, addPinned, deleteNote, moveToTrash } =
+  const { setNotes, getModal, darkMode, deleteNote, moveToTrash } =
     useNote();
   const titleEditRef = useRef();
   const textEditRef = useRef();
@@ -57,17 +56,6 @@ export default function TrashNoteModal({ note }) {
             >
               {note.title}
             </div>
-            {note.isPinned ? (
-              <BsPinFill
-                className="icon note-icon"
-                onClick={() => addPinned(note.id)}
-              />
-            ) : (
-              <BsPin
-                className="icon note-icon"
-                onClick={() => addPinned(note.id)}
-              />
-            )}
           </div>
           <div
             contentEditable
