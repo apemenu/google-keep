@@ -19,7 +19,7 @@ export default function App() {
           <div className="mainbar">
             {searchNote !== "" && (
               <NoteSearch
-                notes={notes.filter(
+                searchNotes={notes.filter(
                   (note) =>
                     note.text.toLowerCase().includes(searchNote) ||
                     note.title.toLowerCase().includes(searchNote)
