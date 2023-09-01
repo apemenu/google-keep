@@ -62,7 +62,6 @@ body.dark {
   display: flex;
   flex-direction: column;
   padding-top: 10px;
-  /* background-color: aqua; */
   transition: 0.3s all linear;
 }
 
@@ -77,11 +76,14 @@ a {
   align-items: center;
   border-radius: 0 25px 25px 0;
   cursor: pointer;
-  transition: border-radius 0.1s;
+  transition: border-radius 0.2s, background-color 0.5s ease;
 }
 
 .sidebar-icon.active {
   background-color: #feefc3;
+}
+.sidebar-icon.active.dark {
+  background-color: #41331c;
 }
 
 .sidebar-icon span {
@@ -89,12 +91,10 @@ a {
   white-space: nowrap;
   font-family: "Google Sans", sans-serif;
   font-size: 14px;
-  color: #202124;
   font-weight: 500;
 }
 
 .sidebar-icon div svg {
-  fill: rgb(102, 102, 102);
   width: 24px;
   height: 24px;
   display: block;
@@ -173,8 +173,10 @@ a {
 .note-list {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, 250px);
+  grid-auto-rows: 10px;
+  overflow: hidden;
+  justify-content: center;
 }
 
 .grid {
@@ -201,7 +203,25 @@ small {
   /* overflow: hidden; */
   position: relative;
   transition: background 0.3s ease;
-  height: fit-content;
+  margin: 5px;
+}
+.note.extrasmall {
+  grid-row-end: span 15;
+}
+.note.small {
+  grid-row-end: span 18;
+}
+.note.medium {
+  grid-row-end: span 21;
+}
+.note.large {
+  grid-row-end: span 24;
+}
+.note.extralarge {
+  grid-row-end: span 27;
+}
+.note.xxlarge {
+  grid-row-end: span 30;
 }
 
 .note.grid {

@@ -6,14 +6,8 @@ import { AiOutlineMinusSquare } from "react-icons/ai";
 import { PiArchiveBox } from "react-icons/pi";
 
 export default function NoteModal({ note }) {
-  const {
-    setNotes,
-    getModal,
-    darkMode,
-    addPinned,
-    archiveNote,
-    moveToTrash,
-  } = useNote();
+  const { setNotes, getModal, darkMode, addPinned, archiveNote, moveToTrash } =
+    useNote();
   const titleEditRef = useRef();
   const textEditRef = useRef();
 

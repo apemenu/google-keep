@@ -120,6 +120,25 @@ export function NoteProvier({ children }) {
     });
   }
 
+  function getNoteSize(noteLength) {
+    let noteSize;
+    if (noteLength <= 50) {
+      noteSize = "extrasmall";
+    } else if (noteLength > 50 && noteLength <= 100) {
+      noteSize = "small";
+    } else if (noteLength > 100 && noteLength <= 150) {
+      noteSize = "medium";
+    } else if (noteLength > 150 && noteLength <= 200) {
+      noteSize = "large";
+    } else if (noteLength > 200 && noteLength <= 250) {
+      noteSize = "extralarge";
+    } else {
+      noteSize = "xxlarge";
+    }
+
+    return noteSize;
+  }
+
   return (
     <NoteContext.Provider
       value={{
@@ -141,6 +160,7 @@ export function NoteProvier({ children }) {
         moveToTrash,
         openNav,
         setOpenNav,
+        getNoteSize,
       }}
     >
       {children}

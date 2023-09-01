@@ -20,6 +20,7 @@ export default function Note({ note }) {
     searchNote,
     archiveNote,
     moveToTrash,
+    getNoteSize,
   } = useNote();
 
   function openModal(e) {
@@ -37,7 +38,9 @@ export default function Note({ note }) {
   return (
     <>
       <motion.div
-        className={`note ${grid ? `grid` : ``}`}
+        className={`note ${getNoteSize(note.text.length)} ${
+          grid ? `grid` : ``
+        }`}
         layout
         onClick={openModal}
         style={{
@@ -74,7 +77,7 @@ export default function Note({ note }) {
           <Highlighter
             searchWords={[searchNote]}
             autoEscape={true}
-            textToHighlight={truncateSentence(note.text, 250)}
+            textToHighlight={truncateSentence(note.text, 300)}
           />
         </span>
         <div className="footer">

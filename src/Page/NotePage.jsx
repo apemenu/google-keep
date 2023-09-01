@@ -5,11 +5,12 @@ import { useNote } from "../context/UseNote";
 
 export default function NotePage() {
   const { notes } = useNote();
+  const isTrash = notes.filter((note) => note.trash === false);
 
   return (
     <>
       <Input />
-      {notes.length === 0 && <p>Add Note</p>}
+      {isTrash.length === 0 && <p>Add Note</p>}
       <NotePinned />
       <NoteList />
     </>

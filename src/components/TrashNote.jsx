@@ -14,6 +14,7 @@ export default function TrashNote({ note }) {
     searchNote,
     deleteNote,
     moveToTrash,
+    getNoteSize,
   } = useNote();
 
   function openModal(e) {
@@ -31,7 +32,9 @@ export default function TrashNote({ note }) {
   return (
     <>
       <motion.div
-        className={`note kontol ${grid ? `grid` : ``}`}
+        className={`note ${getNoteSize(note.text.length)} ${
+          grid ? `grid` : ``
+        }`}
         layout
         onClick={openModal}
         style={{
@@ -57,7 +60,7 @@ export default function TrashNote({ note }) {
           <Highlighter
             searchWords={[searchNote]}
             autoEscape={true}
-            textToHighlight={truncateSentence(note.text, 250)}
+            textToHighlight={truncateSentence(note.text, 300)}
           />
         </span>
         <div className="footer">

@@ -1,17 +1,26 @@
 import { CiStickyNote } from "react-icons/ci";
 import { BsTrash } from "react-icons/bs";
 import { PiArchiveBox } from "react-icons/pi";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNote } from "../context/UseNote";
+import { useState } from "react";
 
 export default function Sidebar() {
-  const { openNav } = useNote();
+  const { openNav, darkMode } = useNote();
 
   const navList = [
-    { id: 1, icon: <CiStickyNote />, link: "", text: "Notes" },
-    { id: 2, icon: <PiArchiveBox />, link: "archive", text: "Archive" },
-    { id: 3, icon: <BsTrash />, link: "trash", text: "Trash" },
+    { id: 1, icon: <CiStickyNote />, link: "", text: "Notes", active: true },
+    {
+      id: 2,
+      icon: <PiArchiveBox />,
+      link: "archive",
+      text: "Archive",
+      active: false,
+    },
+    { id: 3, icon: <BsTrash />, link: "trash", text: "Trash", active: false },
   ];
+
+  const [links, setLinks] = useState(navList);
 
   const styles = {
     width: openNav ? "100%" : "48px",
@@ -19,7 +28,20 @@ export default function Sidebar() {
     marginLeft: openNav ? "0" : "12px",
     justifyContent: openNav ? "start" : "center",
     paddingLeft: openNav ? "24px" : "0",
+    color: darkMode ? "#fff" : "#202124",
   };
+
+  function activeLink(id) {
+    setLinks((prevLinks) => {
+      return prevLinks.map((link) => {
+        if (link.id === id) {
+          return { ...link, active: true };
+        } else {
+          return { ...link, active: false };
+        }
+      });
+    });
+  }
 
   return (
     <div
@@ -28,19 +50,22 @@ export default function Sidebar() {
         width: openNav ? "240px" : "fit-content",
       }}
     >
-      {navList.map((nav) => {
+      {links.map((nav) => {
         return (
-          <NavLink
+          <Link
             key={nav.id}
-            className="sidebar-icon"
+            className={`sidebar-icon ${nav.active ? "active" : ""} ${
+              darkMode ? "dark" : ""
+            }`}
             to={nav.link}
             style={styles}
+            onClick={() => activeLink(nav.id)}
           >
             <div className="div-icon">{nav.icon}</div>{" "}
             <span style={{ display: openNav ? "block" : "none" }}>
               {nav.text}
             </span>
-          </NavLink>
+          </Link>
         );
       })}
     </div>
